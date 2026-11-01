@@ -1,0 +1,39 @@
+{
+  "checks": [
+    "목록에서 영화 1, 3 북마크",
+    "검색 결과 두 영화의 활성 북마크 일치",
+    "상세 화면과 Local Storage의 [1, 3] 일치"
+  ],
+  "persistedValue": {
+    "state": {
+      "bookmarkedMovieIds": [
+        1,
+        3
+      ]
+    },
+    "version": 0
+  },
+  "responsive": [
+    {
+      "width": 390,
+      "columns": 1,
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "columns": 2,
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "columns": 3,
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "columns": 5,
+      "overflow": false
+    }
+  ],
+  "consoleErrors": []
+}
