@@ -1,0 +1,175 @@
+import { Link, useNavigate, useSearch } from "@tanstack/react-router";
+import { useCallback, useEffect, useState, type SubmitEvent } from "react";
+import { searchMovies } from "../../api/movies/search-movies";
+import { useMovieRequest } from "../../hooks/use-movie-request";
+import { MovieImage } from "../../components/movies/movie-image";
+import { getTmdbPosterUrl } from "../../utils/movies/tmdb-image";
+import { BookmarkButton } from "../../components/movies/bookmark-button";
+import { cn } from "../../utils/cn";
+
+const searchError = () => "검색 결과를 불러오지 못했어요.";
+
+export function SearchPage() {
+  const { query } = useSearch({ from: "/search" });
+  const navigate = useNavigate({ from: "/search" });
+  const [searchText, setSearchText] = useState(query ?? "");
+  useEffect(() => {
+    setSearchText(query ?? "");
+  }, [query]);
+  const normalizedQuery = query?.trim() ?? "";
+  const request = useCallback(
+    (signal: AbortSignal) =>
+      normalizedQuery
+        ? searchMovies({ query: normalizedQuery }, signal)
+        : Promise.resolve({
+            page: 1,
+            results: [],
+            total_pages: 0,
+            total_results: 0,
+          }),
+    [normalizedQuery],
+  );
+  const state = useMovieRequest(normalizedQuery, request, searchError);
+  const searchResults = state.status === "success" ? state.data.results : [];
+
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const nextQuery = searchText.trim();
+    void navigate({ search: nextQuery ? { query: nextQuery } : {} });
+  }
+
+  return (
+    <main
+      className={cn(
+        "mx-auto w-[calc(100%-40px)] max-w-[1280px] min-[801px]:w-[calc(100%-64px)] min-[1101px]:w-[calc(100%-160px)] flex-1 pb-16",
+        normalizedQuery ? "pt-6" : "pt-24 sm:pt-[208px]",
+      )}
+    >
+      <h1
+        className={cn(
+          "font-extrabold tracking-[-1.4px]",
+          normalizedQuery
+            ? "mb-[22px] text-[28px] leading-9 sm:text-[36px] sm:leading-[44px]"
+            : "mb-10 text-center text-[28px] leading-9 sm:text-[40px] sm:leading-[52px]",
+        )}
+      >
+        {normalizedQuery ? "영화 검색" : "어떤 영화를 찾고 있나요?"}
+      </h1>
+      <form
+        onSubmit={handleSubmit}
+        className={cn(
+          "flex h-[74px] items-center gap-3 rounded-xl border-2 border-ink bg-white pr-3 pl-3 shadow-[0_12px_30px_#181a1e0d] sm:gap-4 sm:pr-4 sm:pl-6",
+          !normalizedQuery && "mx-auto max-w-[790px]",
+        )}
+      >
+        <img
+          src="/icons/search.svg"
+          alt=""
+          width="24"
+          height="24"
+          className="shrink-0 opacity-60"
+        />
+        <input
+          aria-label="검색어"
+          placeholder="예: 스파이더맨"
+          value={searchText}
+          onChange={(event) => setSearchText(event.target.value)}
+          className="min-w-0 flex-1 rounded-sm bg-transparent p-1 text-base placeholder:text-subtle"
+        />
+        <button
+          type="submit"
+          className="h-[42px] shrink-0 rounded-lg bg-ink px-[18px] text-sm font-bold text-white hover:bg-ink/85"
+        >
+          검색
+        </button>
+      </form>
+      {!normalizedQuery ? (
+        <p className="mt-6 text-center text-sm text-muted">
+          검색어를 입력해 주세요.
+        </p>
+      ) : (
+        <section aria-label="검색 결과" className="mt-10">
+          <h2 className="text-xl leading-7 font-bold wrap-anywhere">
+            ‘{query}’ 검색 결과
+          </h2>
+          <p className="mt-2 mb-5 text-sm text-muted" role="status">
+            {state.status === "success"
+              ? "영화 " + state.data.total_results + "편"
+              : ""}
+          </p>
+          {state.status === "loading" ? (
+            <p role="status" className="py-12 text-muted">
+              검색 결과를 불러오는 중이에요.
+            </p>
+          ) : state.status === "error" ? (
+            <p role="alert" className="py-12 text-muted">
+              {state.message}
+            </p>
+          ) : searchResults.length === 0 ? (
+            <p className="py-12 text-center text-muted">검색 결과가 없어요.</p>
+          ) : (
+            <ul className="grid gap-5 lg:grid-cols-2">
+              {searchResults.map((movie) => (
+                <li
+                  key={movie.id}
+                  className="flex min-w-0 gap-4 rounded-xl border border-border bg-white p-4 sm:gap-6"
+                >
+                  <div className="relative w-24 shrink-0 self-start sm:w-32">
+                    <Link
+                      to="/movies/$movieId"
+                      params={{ movieId: String(movie.id) }}
+                      className="block"
+                    >
+                      <MovieImage
+                        src={getTmdbPosterUrl(movie.poster_path)}
+                        alt={movie.title + " 포스터"}
+                        className="aspect-[2/3] w-full rounded-lg object-cover"
+                      />
+                    </Link>
+                    <BookmarkButton movieId={movie.id} title={movie.title} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-lg leading-6 font-bold wrap-anywhere">
+                      <Link
+                        to="/movies/$movieId"
+                        params={{ movieId: String(movie.id) }}
+                        className="hover:underline"
+                      >
+                        {movie.title}
+                      </Link>
+                    </h3>
+                    <p className="mt-2 text-sm leading-5 text-muted wrap-anywhere">
+                      {movie.original_title}
+                    </p>
+                    <time
+                      dateTime={movie.release_date.replaceAll(".", "-")}
+                      className="mt-1 block text-xs text-subtle"
+                    >
+                      {movie.release_date || "개봉일 정보가 없어요."}
+                    </time>
+                    <p className="mt-4 text-sm leading-6 text-muted">
+                      {movie.overview || "줄거리 정보가 없어요."}
+                    </p>
+                    <Link
+                      to="/movies/$movieId"
+                      params={{ movieId: String(movie.id) }}
+                      className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-primary hover:underline"
+                    >
+                      상세 보기
+                      <img
+                        src="/icons/arrow-right.svg"
+                        alt=""
+                        width="24"
+                        height="24"
+                      />
+                    </Link>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      )}
+    </main>
+  );
+}
