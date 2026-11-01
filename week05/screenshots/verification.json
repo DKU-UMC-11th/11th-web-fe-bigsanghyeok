@@ -1,0 +1,293 @@
+{
+  "source": "real TMDB API; no route interception or mock data",
+  "checkedAt": "2026-11-01T12:24:03.048Z",
+  "checks": [
+    {
+      "check": "ky popular",
+      "page": 1,
+      "count": 20,
+      "totalResults": 20001,
+      "firstId": 155
+    },
+    {
+      "check": "pure fetch",
+      "page": 1,
+      "count": 20,
+      "totalResults": 20001,
+      "firstId": 155
+    },
+    {
+      "check": "list direct URL and reload",
+      "passed": true
+    },
+    {
+      "check": "search direct URL",
+      "query": "스파이더맨",
+      "count": 14,
+      "totalResults": 14
+    },
+    {
+      "check": "search reload",
+      "passed": true
+    },
+    {
+      "check": "detail direct URL and reload",
+      "id": 155,
+      "title": "다크 나이트",
+      "originalTitle": "The Dark Knight",
+      "runtime": 152,
+      "genres": [
+        "액션",
+        "스릴러",
+        "범죄"
+      ]
+    },
+    {
+      "check": "bookmark persisted TMDB ID",
+      "passed": true,
+      "id": 155
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/search/movie",
+      "query": {
+        "query": "스파이더맨",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/search/movie",
+      "query": {
+        "query": "스파이더맨",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/movie/155",
+      "query": {
+        "language": "ko-KR"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/movie/155",
+      "query": {
+        "language": "ko-KR"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/search/movie",
+      "query": {
+        "query": "스파이더맨",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/movie/155",
+      "query": {
+        "language": "ko-KR"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/search/movie",
+      "query": {
+        "query": "스파이더맨",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/movie/155",
+      "query": {
+        "language": "ko-KR"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/search/movie",
+      "query": {
+        "query": "스파이더맨",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/movie/155",
+      "query": {
+        "language": "ko-KR"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/search/movie",
+      "query": {
+        "query": "스파이더맨",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/movie/155",
+      "query": {
+        "language": "ko-KR"
+      },
+      "status": 200
+    }
+  ],
+  "responsive": [
+    {
+      "width": 390,
+      "route": "/",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/search?query=%EC%8A%A4%ED%8C%8C%EC%9D%B4%EB%8D%94%EB%A7%A8",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "route": "/movies/155",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/search?query=%EC%8A%A4%ED%8C%8C%EC%9D%B4%EB%8D%94%EB%A7%A8",
+      "overflow": false
+    },
+    {
+      "width": 768,
+      "route": "/movies/155",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "route": "/",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "route": "/search?query=%EC%8A%A4%ED%8C%8C%EC%9D%B4%EB%8D%94%EB%A7%A8",
+      "overflow": false
+    },
+    {
+      "width": 1024,
+      "route": "/movies/155",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/search?query=%EC%8A%A4%ED%8C%8C%EC%9D%B4%EB%8D%94%EB%A7%A8",
+      "overflow": false
+    },
+    {
+      "width": 1440,
+      "route": "/movies/155",
+      "overflow": false
+    }
+  ],
+  "consoleErrors": []
+}
