@@ -1,0 +1,268 @@
+{
+  "source": "real TMDB API without request interception",
+  "checkedAt": "2026-11-08T13:24:27.202Z",
+  "checks": [
+    {
+      "check": "list 1→2→1 cache reuse",
+      "countOnPage1": 20,
+      "successfulRequests": 2,
+      "additionalRequestsOnReturn": 0,
+      "cache": [
+        {
+          "key": [
+            "movies",
+            "list",
+            {
+              "page": 1
+            }
+          ],
+          "status": "success",
+          "fetchStatus": "idle",
+          "stale": false,
+          "observers": 1,
+          "staleTime": 60000,
+          "gcTime": 300000
+        },
+        {
+          "key": [
+            "movies",
+            "list",
+            {
+              "page": 2
+            }
+          ],
+          "status": "success",
+          "fetchStatus": "idle",
+          "stale": false,
+          "observers": 0,
+          "staleTime": 60000,
+          "gcTime": 300000
+        }
+      ]
+    },
+    {
+      "check": "empty search does not fetch",
+      "cache": [
+        {
+          "key": [
+            "movies",
+            "list",
+            {
+              "page": 1
+            }
+          ],
+          "status": "success",
+          "fetchStatus": "idle",
+          "stale": false,
+          "observers": 0,
+          "staleTime": 60000,
+          "gcTime": 300000
+        },
+        {
+          "key": [
+            "movies",
+            "list",
+            {
+              "page": 2
+            }
+          ],
+          "status": "success",
+          "fetchStatus": "idle",
+          "stale": false,
+          "observers": 0,
+          "staleTime": 60000,
+          "gcTime": 300000
+        },
+        {
+          "key": [
+            "movies",
+            "search",
+            {
+              "query": ""
+            }
+          ],
+          "status": "pending",
+          "fetchStatus": "idle",
+          "stale": false,
+          "observers": 1,
+          "staleTime": 60000,
+          "gcTime": 300000
+        }
+      ]
+    },
+    {
+      "check": "search cache reuse",
+      "query": "스파이더맨",
+      "totalResults": 14,
+      "additionalRequestsOnReturn": 0,
+      "cache": [
+        {
+          "key": [
+            "movies",
+            "list",
+            {
+              "page": 1
+            }
+          ],
+          "status": "success",
+          "fetchStatus": "idle",
+          "stale": false,
+          "observers": 0,
+          "staleTime": 60000,
+          "gcTime": 300000
+        },
+        {
+          "key": [
+            "movies",
+            "list",
+            {
+              "page": 2
+            }
+          ],
+          "status": "success",
+          "fetchStatus": "idle",
+          "stale": false,
+          "observers": 0,
+          "staleTime": 60000,
+          "gcTime": 300000
+        },
+        {
+          "key": [
+            "movies",
+            "search",
+            {
+              "query": ""
+            }
+          ],
+          "status": "pending",
+          "fetchStatus": "idle",
+          "stale": true,
+          "observers": 0,
+          "staleTime": 60000,
+          "gcTime": 300000
+        },
+        {
+          "key": [
+            "movies",
+            "search",
+            {
+              "query": "스파이더맨"
+            }
+          ],
+          "status": "success",
+          "fetchStatus": "idle",
+          "stale": false,
+          "observers": 1,
+          "staleTime": 60000,
+          "gcTime": 300000
+        }
+      ]
+    },
+    {
+      "check": "detail cache reuse",
+      "id": 687163,
+      "title": "프로젝트 헤일메리",
+      "additionalRequestsOnReturn": 0
+    },
+    {
+      "check": "detail fresh→stale after 30 seconds",
+      "fresh": {
+        "key": [
+          "movies",
+          "detail",
+          687163
+        ],
+        "status": "success",
+        "fetchStatus": "idle",
+        "stale": false,
+        "observers": 1,
+        "staleTime": 30000,
+        "gcTime": 300000
+      },
+      "stale": {
+        "key": [
+          "movies",
+          "detail",
+          687163
+        ],
+        "status": "success",
+        "fetchStatus": "idle",
+        "stale": true,
+        "observers": 1,
+        "staleTime": 30000,
+        "gcTime": 300000
+      },
+      "requestsTriggeredByTimeAlone": 0
+    },
+    {
+      "check": "stale detail refetch on remount",
+      "additionalRequests": 1
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/movie/popular",
+      "query": {
+        "language": "ko-KR",
+        "page": "2"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/search/movie",
+      "query": {
+        "query": "스파이더맨",
+        "language": "ko-KR",
+        "include_adult": "false",
+        "page": "1"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/movie/687163",
+      "query": {
+        "language": "ko-KR"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/3/movie/687163",
+      "query": {
+        "language": "ko-KR"
+      },
+      "status": 200
+    }
+  ],
+  "responsive": [
+    {
+      "width": 390,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1024,
+      "horizontalOverflow": false
+    },
+    {
+      "width": 1440,
+      "horizontalOverflow": false
+    }
+  ],
+  "consoleErrors": []
+}
