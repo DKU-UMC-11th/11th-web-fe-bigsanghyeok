@@ -1,0 +1,141 @@
+{
+  "checkedAt": "2026-11-15T14:07:17.067Z",
+  "source": "Actual Spring/MySQL signup and TMDB; login/profile are week 7 publishing with local state",
+  "checks": [
+    {
+      "check": "login inputs",
+      "emailVisible": true,
+      "passwordMasked": true,
+      "backendLoginConnected": false
+    },
+    {
+      "check": "signup against actual Spring/MySQL",
+      "status": 201,
+      "isSuccess": true,
+      "requestFields": [
+        "email",
+        "nickname",
+        "password"
+      ],
+      "passwordInResponse": false,
+      "memberId": 5
+    },
+    {
+      "check": "created email becomes unavailable",
+      "available": false
+    },
+    {
+      "check": "my profile publishing and existing favorites",
+      "nickname": "gs0428",
+      "favoriteIds": [
+        1423191,
+        1263337,
+        1368337
+      ],
+      "profileApiConnected": false
+    },
+    {
+      "check": "local profile nickname update",
+      "savedNickname": "대상혁07",
+      "emailUnchanged": true,
+      "updateApiConnected": false
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/members/email/week07-1630386%40example.com",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/members/nickname/%ED%9A%8C%EC%9B%901630386",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/members",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/members/email/week07-1630386%40example.com",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/members/nickname/%EB%8C%80%EC%83%81%ED%98%8107",
+      "status": 200
+    }
+  ],
+  "dialogs": [
+    "사용할 수 있는 이메일이에요.",
+    "사용할 수 있는 닉네임이에요.",
+    "회원가입에 성공했습니다.",
+    "이미 사용 중인 이메일이에요.",
+    "사용할 수 있는 닉네임이에요."
+  ],
+  "responsive": [
+    {
+      "route": "/login",
+      "width": 390,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "/login",
+      "width": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "/login",
+      "width": 1440,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "/signup",
+      "width": 390,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "/signup",
+      "width": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "/signup",
+      "width": 1440,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "/my",
+      "width": 390,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "/my",
+      "width": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "/my",
+      "width": 1440,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "/my/edit",
+      "width": 390,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "/my/edit",
+      "width": 768,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "/my/edit",
+      "width": 1440,
+      "horizontalOverflow": false
+    }
+  ],
+  "consoleErrors": []
+}
